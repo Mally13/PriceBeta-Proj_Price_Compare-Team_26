@@ -24,7 +24,7 @@ def get_categories(URL):
     # retrieving categories
     categoryDict={}
     categories=soup.findAll("a",attrs={"class":'itm',"role": 'menuitem'})
-    sub_categories=soup.findAll("a", attrs={"class":'tit', "role":'menuitem'})
+    sub_categories=soup.findAll("div", attrs={"class":'sub', "role":'menu'})
     for category in categories: 
         try:
             category_value= category.span.string
@@ -32,25 +32,31 @@ def get_categories(URL):
             category_string = category_value.strip().replace(',', '')
 
             sub_categoriesdict={}
+           
+
             for sub_category in sub_categories:
                 try:
-                    sub_category_value=sub_categories.string
-                    sub_category_string = sub_category_value.strip().replace(',', '')
-                except AttributeError:
+                    sub_category_values=sub_categories.div.div.findAll("a", attrs={"class":'tit', "role":'menuitem'})
+                    for all sub_category_value in sub_category_values:
+                        try:
+                               sub_category_string = sub_category_value.strip().replace(',', '')
+                    except AttributeError:
                     sub_category_string="NA"
-                categoryDict[category_string]=sub_categoriesdict[sub_category_string]
+
+                print(sub_category_string)
+                
                 
                   
                                 
 
         except AttributeError:
-            category_string = "NA"
-           
+            category_string = "NA"        
         
         
 
 
-        print(categoryDict)
+        # print(category_string)
+        
     
         # saving the category in the file
         # File.write(f"{category_string},")

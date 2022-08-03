@@ -34,19 +34,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #third party
+    'rest_framework',
+    'corsheaders',
+    "rest_framework.authtoken", # new
+    #local
+    'accounts.apps.AccountsConfig',
     'listings.apps.ListingsConfig',
+    'watchlist.apps.WatchlistConfig',
 
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOWED_ORIGINS = (
+    "http://localhost:3000",
+    "http://localhost:8000",
+)
 
 ROOT_URLCONF = 'price_compare.urls'
 
@@ -90,6 +103,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+## CUSTOM USER MODEL
+# AUTH_USER_MODEL = 'accounts.User'
+
+REST_FRAMEWORK = {
+"DEFAULT_PERMISSION_CLASSES": [
+    "rest_framework.permissions.IsAuthenticated",
+],
+# "DEFAULT_AUTHENTICATION_CLASSES": [ 
+#     # new
+#     "rest_framework.authentication.SessionAuthentication",
+#     "rest_framework.authentication.TokenAuthentication", #new
+# ],
+}
+
 
 
 # Internationalization
@@ -113,6 +140,19 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000"]
+
+
+
+# EMAIL_PORT = os.environ["EMAIL_PORT"]
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_USE_SSL = True
+# EMAIL_HOST = 'smtp.zoho.com'
+# EMAIL_HOST_USER = os.environ["EMAIL_USER"]
+# EMAIL_HOST_PASSWORD = os.environ["EMAIL_PASSWORD"]
 
 try:
    from .local_settings import *

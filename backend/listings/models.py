@@ -107,6 +107,5 @@ class Sale_Detail(models.Model):
         ordering=('price',)
         verbose_name_plural='sale_details'
     
-    def __str__(self):
-        return self.price
+   
 

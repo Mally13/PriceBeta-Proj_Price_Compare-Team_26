@@ -8,6 +8,14 @@ from .models import ProductImage
 
 
 # Register your models here.
+class ProductImageInline(admin.TabularInline):
+    model=ProductImage
+
+class SaleDetailInline(admin.TabularInline):
+    model=Sale_Detail
+
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display=('name','slug','thumbnail')
@@ -25,19 +33,13 @@ class ProductAdmin(admin.ModelAdmin):
     list_display =('name', 'subcategory', 'brand', 'slug')
     list_filter = ('subcategory','brand')
     prepopulated_fields = {'slug': ('name',)}
+    inlines = [ProductImageInline,SaleDetailInline]
 
-@admin.register(ProductImage)
-class ProductImageAdmin(admin.ModelAdmin):
-    list_display =('product','image')
-    list_filter = ('product',)
+
 
 @admin.register(Shop)
 class ShopAdmin(admin.ModelAdmin):
     list_display =('name',)
 
-@admin.register(Sale_Detail)
-class SaleDetailAdmin(admin.ModelAdmin):
-    list_display =('product', 'shop', 'price', 'link_to_shop','available')
-    list_filter = ('shop','product','available')
 
 
